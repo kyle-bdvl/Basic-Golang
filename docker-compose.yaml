@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: Crud-App-Db
+    environment:
+      POSTGRES_PASSWORD: Mffjog123**
+    ports:
+      - "5438:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

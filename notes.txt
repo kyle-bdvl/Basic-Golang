@@ -1,0 +1,61 @@
+Learning how to use Chi 
+- http methods 
+1. r.get("/{any route path like node}", function name)
+        r.Get("/users", getUsers)
+        r.Post("/users", createUser)
+        r.Put("/users/{id}", updateUser)
+        r.Delete("/users/{id}", deleteUser)
+
+e.g 
+func handler (w, http.ResponseWriter, r *http.Request)
+
+Read URL Params 
+r.Get("/users/{id}", getUser)
+
+How the hanlder would look like 
+func getUser(w http.ResponseWriter, r *http.Request) {
+    id := chi.URLParam(r, "id")
+
+    fmt.Fprintf(w, "User ID: %s", id)
+}
+
+E.g Reading Json 
+
+{
+    "name": "Bob"
+    "Age":25
+}
+IN GO 
+type user struct {
+    Name string `json:"name"`
+    Age int `json:"age"`
+}
+How the hanlder would look like 
+func createUser(w http.ResponseWriter, r *http.Request) {
+    var user User
+
+    err := json.NewDecoder(r.Body).Decode(&user)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusBadRequest)
+        return
+    }
+
+    fmt.Fprintf(w, "Created %s", user.Name)
+}
+
+Register this as 
+r.Post("/users", createUser)
+
+THE RESPONSE 
+response := User{
+    Name: "Alice",
+    Age: 25,
+}
+
+w.Header().Set("Content-Type", "application/json")
+json.NewEncoder(w).Encode(response)
+
+
+NOTE :
+Decoder: JSON ➜ Go struct
+Encoder: Go struct ➜ JSON

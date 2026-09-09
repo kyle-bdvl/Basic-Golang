@@ -1,0 +1,10 @@
+goose -dir db/migrations postgres "$GOOSE_DBSTRING" up
+goose -dir db/migrations postgres "$DATABASE_URL" down
+goose -dir db/migrations postgres "$DATABASE_URL" status
+
+we don't have to do this as we already have the Env to settle it for creation
+
+$ goose create add_some_column sql
+
+// to update the db
+$ goose -env .env -dir db/migrations up
